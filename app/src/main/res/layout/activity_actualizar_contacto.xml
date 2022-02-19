@@ -37,7 +37,7 @@
                 android:text="Codigo" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/txtActCodigo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -52,7 +52,7 @@
                 android:text="Seleccionar Pais" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/cmbActSeleccionarPais"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -63,7 +63,7 @@
                 android:text="Nombre Completo" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName3"
+                android:id="@+id/txtActNombreCompleto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -77,7 +77,7 @@
                 android:text="Telefono" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName4"
+                android:id="@+id/txtActTelefono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -91,7 +91,7 @@
                 android:text="Nota" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName5"
+                android:id="@+id/txtActNota"
                 android:layout_width="match_parent"
                 android:layout_height="118dp"
                 android:ems="10"

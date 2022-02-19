@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -27,28 +28,42 @@ public class ActivityListadoContacto extends AppCompatActivity {
 
     Button alcbtnAtras,btnactualizarContacto;
 
+    Intent intent;
+    Contactos contacto;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_contacto);
 
         lista = (ListView) findViewById(R.id.LisViewContactos);
+        intent = new Intent(getApplicationContext(),ActivityActualizarContacto.class);
 
         conexion = new SQLiteConexion(this, Transacciones.NameDatabase,null,1);
 
         obtenerlistaContactos();
 
-        //llenar grip con datos empleado
-        ArrayAdapter adp = new ArrayAdapter(this, android.R.layout.simple_list_item_1,ArregloContactos);
+        //llenar grip con datos contactos
+        ArrayAdapter adp = new ArrayAdapter(this, android.R.layout.simple_list_item_checked,ArregloContactos);
         lista.setAdapter(adp);
 
 
-
+        //seteo el contacto seleccionado para luego iniciar la actividad en el boton actualizar
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                contacto = listaContactos.get(i);//lleno la lista de contacto
+                setContactoSeleccionado();
+            }
+        });
 
 
         alcbtnAtras = (Button) findViewById(R.id.btnAtras);
         btnactualizarContacto = (Button) findViewById(R.id.btnActualizarContacto);
 
+
+    //------------------------------------------BOTONES------------------------------------------
         alcbtnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,11 +75,27 @@ public class ActivityListadoContacto extends AppCompatActivity {
         btnactualizarContacto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),ActivityActualizarContacto.class);
+
                 startActivity(intent);
             }
         });
     }
+
+    //-------------------------------------------metodos-----------------------------------------
+
+    private void setContactoSeleccionado() {
+
+        //contacto = listaContactos.get(id);
+        //intent = new Intent(getApplicationContext(),ActivityActualizarContacto.class);
+        intent.putExtra("codigo", contacto.getCodigo()+"");
+        intent.putExtra("nombreContacto", contacto.getNombreContacto());
+        intent.putExtra("numeroContacto", contacto.getNumeroContacto()+"");
+        intent.putExtra("codigoPais", contacto.getCodigoPais()+"");
+        intent.putExtra("notaContacto", contacto.getNota());
+        //startActivity(intent);
+    }
+
+
 
     private void obtenerlistaContactos() {
         //conexion a la BD modo lectura
@@ -102,7 +133,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
 
         for (int i=0; i<listaContactos.size();i++)
         {
-            ArregloContactos.add(listaContactos.get(i).getNombreContacto()+"|"+
+            ArregloContactos.add(listaContactos.get(i).getNombreContacto()+" | "+
                     listaContactos.get(i).getCodigoPais()+
                     listaContactos.get(i).getNumeroContacto());
 
