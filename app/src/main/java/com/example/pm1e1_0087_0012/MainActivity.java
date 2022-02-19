@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         foto = (ImageView) findViewById(R.id.imageView);
 
         Button btnGuardarContacto = (Button) findViewById(R.id.btnGuardar);
+        Button btnContactoSalvados = (Button)findViewById(R.id.btnListar);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatAgregarPais);
 
@@ -46,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),ActivityPais.class);
                 startActivity(intent);
 
+            }
+        });
+
+        btnContactoSalvados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),ActivityListadoContacto.class);
+                startActivity(intent);
             }
         });
 

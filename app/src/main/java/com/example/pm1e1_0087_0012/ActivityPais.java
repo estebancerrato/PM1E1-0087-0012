@@ -3,6 +3,7 @@ package com.example.pm1e1_0087_0012;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,7 @@ import com.example.pm1e1_0087_0012.configuraciones.Transacciones;
 public class ActivityPais extends AppCompatActivity {
 
     EditText aptxtCodigo,aptxtPais;
-    Button apbtnGuardar;
+    Button apbtnGuardar, aptnAtras;
 
 
     @Override
@@ -27,11 +28,20 @@ public class ActivityPais extends AppCompatActivity {
         aptxtCodigo = (EditText) findViewById(R.id.aptxtCodigo);
         aptxtPais = (EditText) findViewById(R.id.aptxtPais);
         apbtnGuardar = (Button) findViewById(R.id.apbtnGuardar);
+        aptnAtras = (Button) findViewById(R.id.apbtnAtras);
 
         apbtnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 InsertarPais();
+            }
+        });
+
+        aptnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
             }
         });
     }
