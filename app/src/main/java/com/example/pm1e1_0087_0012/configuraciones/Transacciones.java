@@ -21,13 +21,13 @@ public class Transacciones {
         public static final String nombreCompleto = "nombreCompleto";
         public static final String telefono = "telefono";
         public static final String nota = "nota";
-        public static final Blob foto = null;
+        public static final String foto = "foto";
         public static final String pais = "pais";
 
         //Transacciones DDL
         public static final String createTableContact = "CREATE TABLE " + tablacontactos +
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "nombreCompleto TEXT, telefono INTEGER, nota TEXT, foto BLOB, pais TEXT)";
+                "nombreCompleto TEXT, telefono INTEGER, nota TEXT, foto BLOB)";
 
         public static final String dropTableContact = "DROP TABLE IF EXIST" + tablacontactos;
 }
