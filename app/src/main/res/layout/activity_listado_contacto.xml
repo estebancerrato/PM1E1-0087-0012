@@ -44,6 +44,7 @@
                     android:orientation="vertical">
 
                     <ListView
+                        android:id="@+id/LisViewContactos"
                         android:layout_width="match_parent"
                         android:layout_height="387dp" />
                 </LinearLayout>

@@ -62,11 +62,11 @@ public class Contactos {
         this.nota = nota;
     }
 
-    public Blob getImage() {
-        return image;
-    }
+
 
     public void setImage(Blob image) {
         this.image = image;
     }
+
+
 }
