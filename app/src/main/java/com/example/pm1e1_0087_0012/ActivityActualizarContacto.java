@@ -154,6 +154,13 @@ public class ActivityActualizarContacto extends AppCompatActivity {
             db.close();
             Toast.makeText(getApplicationContext(),"Se actualizo correctamente", Toast.LENGTH_SHORT).show();
 
+            //volver abrir la ventana
+            Intent intent = new Intent(this, ActivityListadoContacto.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+
+
         }catch (Exception e)
         {
             Toast.makeText(getApplicationContext(),"No se actualizo", Toast.LENGTH_SHORT).show();

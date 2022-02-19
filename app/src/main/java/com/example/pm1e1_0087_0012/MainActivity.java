@@ -205,6 +205,13 @@ public class MainActivity extends AppCompatActivity {
                 ,Toast.LENGTH_LONG).show();
 
         db.close();
+
+
+        //volver abrir la ventana
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 
     private void ObtenerListaPaises() {

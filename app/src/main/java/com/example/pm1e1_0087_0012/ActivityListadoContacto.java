@@ -2,6 +2,9 @@ package com.example.pm1e1_0087_0012;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,7 +78,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
             }
         });
 
-
+        //--------------------------------------LISTA------------------------------------------
         //seteo el contacto seleccionado para luego iniciar la actividad en el boton actualizar
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -82,6 +86,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
                 contacto = listaContactos.get(i);//lleno la lista de contacto
                 setContactoSeleccionado();
             }
+
         });
 
 
@@ -107,10 +112,43 @@ public class ActivityListadoContacto extends AppCompatActivity {
             }
         });
 
+        final Context context = this;
+
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                eliminarContacto();
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                // set title
+
+                alertDialogBuilder.setTitle("Eliminar Contacto");
+
+
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("¿Está seguro de eliminar el contacto?")
+                        .setCancelable(false)
+                        .setPositiveButton("SI",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // si el usuario da click en si procede a llamar el metodo de eliminar
+                                eliminarContacto();
+                            }
+                        })
+                        .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+
             }
         });
     }
@@ -128,8 +166,11 @@ public class ActivityListadoContacto extends AppCompatActivity {
                 ,Toast.LENGTH_LONG).show();
         db.close();
 
-        //Actualizar lista
-
+        //despues de eliminar vuelve a abrir la activida, limpiando los menu anteriores
+        Intent intent = new Intent(this, ActivityListadoContacto.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
 
 
     }
