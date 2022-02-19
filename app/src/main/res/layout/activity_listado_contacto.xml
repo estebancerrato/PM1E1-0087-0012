@@ -23,14 +23,15 @@
                 android:text="Atras" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/alctxtnombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:ems="10"
                 android:hint="Buscar"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <ScrollView
                 android:layout_width="match_parent"

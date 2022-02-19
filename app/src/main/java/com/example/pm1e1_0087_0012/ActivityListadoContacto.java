@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.pm1e1_0087_0012.Clases.Contactos;
@@ -25,7 +28,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
     ListView lista;
     ArrayList<Contactos> listaContactos;
     ArrayList <String> ArregloContactos;
-
+    EditText alctxtnombre;
     Button alcbtnAtras,btnactualizarContacto;
 
     Intent intent;
@@ -47,6 +50,28 @@ public class ActivityListadoContacto extends AppCompatActivity {
         //llenar grip con datos contactos
         ArrayAdapter adp = new ArrayAdapter(this, android.R.layout.simple_list_item_checked,ArregloContactos);
         lista.setAdapter(adp);
+
+        /*BUSCAR CONTACTOS EN LISTA*/
+        alctxtnombre = (EditText) findViewById(R.id.alctxtnombre);
+
+        alctxtnombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                adp.getFilter().filter(charSequence);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
 
         //seteo el contacto seleccionado para luego iniciar la actividad en el boton actualizar
