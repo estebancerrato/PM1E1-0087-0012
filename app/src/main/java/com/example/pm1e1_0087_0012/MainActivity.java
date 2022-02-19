@@ -9,11 +9,14 @@ import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spPais;
     ImageView foto;
     Button btnSlcFoto,btnTomarFoto;
+
     static final int PETICION_ACCESO_CAM = 100;
     static final int TAKE_PIC_REQUEST = 101;
     Bitmap imagen;
@@ -91,6 +95,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 permisos();
+            }
+        });
+
+        ObtenerListaPaises();
+
+        ArrayAdapter<CharSequence> adp = new ArrayAdapter(this, android.R.layout.simple_spinner_item,lista_paises);
+        spPais.setAdapter(adp);
+
+        spPais.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                Toast.makeText(getApplicationContext(),adapterView.getSelectedItem().toString(),Toast.LENGTH_SHORT).show();
+                //spPais.setAdapter(adapterView.getSelectedItem().toString());
+                //item = adapterView.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
@@ -163,5 +187,38 @@ public class MainActivity extends AppCompatActivity {
                 ,Toast.LENGTH_LONG).show();
 
         db.close();
+    }
+
+    private void ObtenerListaPaises() {
+        Pais pais = null;
+        lista = new ArrayList<Pais>();
+        //conexion = new SQLiteConexion(this, Transacciones.NameDatabase,null,1);
+        db = conexion.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Transacciones.tblPaises,null);
+
+        while (cursor.moveToNext())
+        {
+            pais = new Pais();
+
+            pais.setCodigo(cursor.getString(0));
+            pais.setNombrePais(cursor.getString(1));
+
+            lista.add(pais);
+        }
+
+        cursor.close();
+
+        fillCombo();
+
+    }
+
+    private void fillCombo() {
+        lista_paises = new ArrayList<String>();
+
+        for (int i=0; i<lista.size();i++)
+        {
+            lista_paises.add(lista.get(i).getNombrePais()+" ( "+lista.get(i).getCodigo()+" )");
+        }
     }
 }
