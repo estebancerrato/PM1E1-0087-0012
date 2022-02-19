@@ -2,14 +2,14 @@ package com.example.pm1e1_0087_0012.Clases;
 
 public class Pais {
     private String codigo;
-    private String pais;
+    private String nombrePais;
 
     public Pais() {
     }
 
-    public Pais(String codigo, String pais) {
+    public Pais(String codigo, String nombrePais) {
         this.codigo = codigo;
-        this.pais = pais;
+        this.nombrePais = nombrePais;
     }
 
     public String getCodigo() {
@@ -20,12 +20,12 @@ public class Pais {
         this.codigo = codigo;
     }
 
-    public String getPais() {
-        return pais;
+    public String getNombrePais() {
+        return nombrePais;
     }
 
-    public void setPais(String pais) {
-        this.pais = pais;
+    public void setNombrePais(String nombrePais) {
+        this.nombrePais = nombrePais;
     }
 
 }
