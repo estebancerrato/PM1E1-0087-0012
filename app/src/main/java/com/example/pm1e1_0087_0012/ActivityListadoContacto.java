@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.pm1e1_0087_0012.Clases.Contactos;
 import com.example.pm1e1_0087_0012.configuraciones.SQLiteConexion;
@@ -29,7 +30,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
     ArrayList<Contactos> listaContactos;
     ArrayList <String> ArregloContactos;
     EditText alctxtnombre;
-    Button alcbtnAtras,btnactualizarContacto;
+    Button alcbtnAtras,btnactualizarContacto, btnEliminar;
 
     Intent intent;
     Contactos contacto;
@@ -86,6 +87,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
 
         alcbtnAtras = (Button) findViewById(R.id.btnAtras);
         btnactualizarContacto = (Button) findViewById(R.id.btnActualizarContacto);
+        btnEliminar = (Button) findViewById(R.id.btnaclEliminarContacto);
 
 
     //------------------------------------------BOTONES------------------------------------------
@@ -104,9 +106,36 @@ public class ActivityListadoContacto extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eliminarContacto();
+            }
+        });
     }
 
-    //-------------------------------------------metodos-----------------------------------------
+    //-------------------------------------------METODOS-----------------------------------------
+
+    private void eliminarContacto() {
+        SQLiteConexion conexion = new SQLiteConexion(this, Transacciones.NameDatabase, null, 1);
+        SQLiteDatabase db = conexion.getWritableDatabase();
+        int obtenerCodigo = contacto.getCodigo();
+
+        db.delete(Transacciones.tablacontactos,Transacciones.id +" = "+ obtenerCodigo, null);
+
+        Toast.makeText(getApplicationContext(), "Registro eliminado con exito, Codigo " + obtenerCodigo
+                ,Toast.LENGTH_LONG).show();
+        db.close();
+
+        //Actualizar lista
+
+
+
+    }
+
+
+
 
     private void setContactoSeleccionado() {
 
