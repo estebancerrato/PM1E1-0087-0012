@@ -30,6 +30,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     SQLiteConexion conexion = new SQLiteConexion(this,Transacciones.NameDatabase,null,1);
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> lista_paises;
     ArrayList<Pais> lista;
+
+    int codigoPaisSeleccionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,9 +112,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
-                Toast.makeText(getApplicationContext(),adapterView.getSelectedItem().toString(),Toast.LENGTH_SHORT).show();
-                //spPais.setAdapter(adapterView.getSelectedItem().toString());
-                //item = adapterView.getSelectedItem().toString();
+                String cadena = adapterView.getSelectedItem().toString();
+
+                //Quitar los caracteres del combobox para obtener solo el codigo del pais
+                codigoPaisSeleccionado = Integer.valueOf(extraerNumeros(cadena).toString().replace("]","").replace("[",""));
+
             }
 
             @Override
@@ -119,6 +126,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    List<Integer> extraerNumeros(String cadena) {
+        List<Integer> todosLosNumeros = new ArrayList<Integer>();
+        Matcher encuentrador = Pattern.compile("\\d+").matcher(cadena);
+        while (encuentrador.find()) {
+            todosLosNumeros.add(Integer.parseInt(encuentrador.group()));
+        }
+        return todosLosNumeros;
+    }
+
+
 
     private void permisos() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
@@ -178,8 +195,9 @@ public class MainActivity extends AppCompatActivity {
         valores.put(Transacciones.nombreCompleto, nombreCompleto.getText().toString());
         valores.put(Transacciones.telefono, telefono.getText().toString());
         valores.put(Transacciones.nota, nota.getText().toString());
-        //valores.put(Transacciones.pais, spPais.getSelectedItem().toString());
         valores.put(Transacciones.foto, String.valueOf(foto));
+        valores.put(Transacciones.pais, codigoPaisSeleccionado);
+
 
         Long resultado = db.insert(Transacciones.tablacontactos, Transacciones.id, valores);
 

@@ -27,7 +27,7 @@ public class Transacciones {
         //Transacciones DDL
         public static final String createTableContact = "CREATE TABLE " + tablacontactos +
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "nombreCompleto TEXT, telefono INTEGER, nota TEXT, foto BLOB)";
+                "nombreCompleto TEXT, telefono INTEGER, nota TEXT, foto BLOB, pais TEXT)";
 
         public static final String dropTableContact = "DROP TABLE IF EXIST" + tablacontactos;
 }

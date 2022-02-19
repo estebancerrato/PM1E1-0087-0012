@@ -4,7 +4,7 @@ import java.sql.Blob;
 
 public class Contactos {
     private int codigo;
-    private String nombrePais;
+    private String codigoPais;
     private String nombreContacto;
     private int numeroContacto;
     private String nota;
@@ -13,9 +13,9 @@ public class Contactos {
     public Contactos() {
     }
 
-    public Contactos(int codigo, String nombrePais, String nombreContacto, int numeroContacto, String nota, Blob image) {
+    public Contactos(int codigo, String codigoPais, String nombreContacto, int numeroContacto, String nota, Blob image) {
         this.codigo = codigo;
-        this.nombrePais = nombrePais;
+        this.codigoPais = codigoPais;
         this.nombreContacto = nombreContacto;
         this.numeroContacto = numeroContacto;
         this.nota = nota;
@@ -30,12 +30,12 @@ public class Contactos {
         this.codigo = codigo;
     }
 
-    public String getNombrePais() {
-        return nombrePais;
+    public String getCodigoPais() {
+        return codigoPais;
     }
 
-    public void setNombrePais(String nombrePais) {
-        this.nombrePais = nombrePais;
+    public void setCodigoPais(String codigoPais) {
+        this.codigoPais = codigoPais;
     }
 
     public String getNombreContacto() {

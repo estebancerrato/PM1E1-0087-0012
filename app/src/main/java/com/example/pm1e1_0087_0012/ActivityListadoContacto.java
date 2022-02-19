@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -88,7 +87,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
             list_contact.setNombreContacto(cursor.getString(1));
             list_contact.setNumeroContacto(cursor.getInt(2));
             list_contact.setNota(cursor.getString(3));
-            list_contact.setNombrePais(cursor.getString(5));
+            list_contact.setCodigoPais(cursor.getString(5));
             listaContactos.add(list_contact);
         }
         cursor.close();
@@ -104,6 +103,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
         for (int i=0; i<listaContactos.size();i++)
         {
             ArregloContactos.add(listaContactos.get(i).getNombreContacto()+"|"+
+                    listaContactos.get(i).getCodigoPais()+
                     listaContactos.get(i).getNumeroContacto());
 
         }
