@@ -1,5 +1,6 @@
 package com.example.pm1e1_0087_0012;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -62,10 +64,25 @@ public class MainActivity extends AppCompatActivity {
         btnGuardarContacto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                guardarContacto();
+                //valida que los datos esten ingresados, antes de guardar
+                validarDatos();
+
+
             }
         });
 
+    }
+
+    private void validarDatos() {
+        if (nombreCompleto.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(), "Debe de escribir un nombre" ,Toast.LENGTH_LONG).show();
+        }else if (telefono.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(), "Debe de escribir un telefono" ,Toast.LENGTH_LONG).show();
+        }else if (nota.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(), "Debe de escribir una nota" ,Toast.LENGTH_LONG).show();
+        }else{
+            guardarContacto();
+        }
     }
 
     private void guardarContacto() {
