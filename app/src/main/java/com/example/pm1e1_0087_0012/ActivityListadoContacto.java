@@ -170,10 +170,16 @@ public class ActivityListadoContacto extends AppCompatActivity {
         btnVerImagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
+                    Intent intent = new Intent(getApplicationContext(),ActivityVerFoto.class);
+                    intent.putExtra("codigoParaFoto", contacto.getCodigo()+"");
+                    startActivity(intent);
+                }catch (NullPointerException e){
+                    Intent intent = new Intent(getApplicationContext(),ActivityVerFoto.class);
+                    intent.putExtra("codigoParaFoto", "1");
+                    startActivity(intent);
+                }
 
-                Intent intent = new Intent(getApplicationContext(),ActivityVerFoto.class);
-                intent.putExtra("codigoParaFoto", contacto.getCodigo()+"");
-                startActivity(intent);
             }
         });
 
