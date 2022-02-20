@@ -10,6 +10,10 @@ public class Contactos {
     private String nota;
     private Blob image;
 
+    public Blob getImage() {
+        return image;
+    }
+
     public Contactos() {
     }
 

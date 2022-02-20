@@ -73,7 +73,7 @@
                     android:text="Compartir contacto" />
 
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/btnVerImagen"
                     android:layout_width="97dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"

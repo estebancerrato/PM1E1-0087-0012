@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -28,6 +30,7 @@ import com.example.pm1e1_0087_0012.Clases.Contactos;
 import com.example.pm1e1_0087_0012.configuraciones.SQLiteConexion;
 import com.example.pm1e1_0087_0012.configuraciones.Transacciones;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
 public class ActivityListadoContacto extends AppCompatActivity {
@@ -38,7 +41,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
     ArrayList<Contactos> listaContactos;
     ArrayList <String> ArregloContactos;
     EditText alctxtnombre;
-    Button alcbtnAtras,btnactualizarContacto, btnEliminar, btnCompartir;
+    Button alcbtnAtras,btnactualizarContacto, btnEliminar, btnCompartir, btnVerImagen;
     Intent intent;
     Contactos contacto;
 
@@ -153,12 +156,23 @@ public class ActivityListadoContacto extends AppCompatActivity {
         btnactualizarContacto = (Button) findViewById(R.id.btnActualizarContacto);
         btnEliminar = (Button) findViewById(R.id.btnaclEliminarContacto);
         btnCompartir = (Button) findViewById(R.id.btnCompartir);
+        btnVerImagen = (Button) findViewById(R.id.btnVerImagen);
 
     //------------------------------------------BOTONES------------------------------------------
         alcbtnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnVerImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(),ActivityVerFoto.class);
+                intent.putExtra("codigoParaFoto", contacto.getCodigo()+"");
                 startActivity(intent);
             }
         });
@@ -221,6 +235,9 @@ public class ActivityListadoContacto extends AppCompatActivity {
     }
 
     //-------------------------------------------METODOS-----------------------------------------
+
+
+
 
     private void permisoLlamada() {
         // valido si el permiso para acceder a la telefono esta otorgado
