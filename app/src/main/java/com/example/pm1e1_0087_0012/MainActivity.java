@@ -197,7 +197,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void validarDatos() {
-        if (nombreCompleto.getText().toString().equals("")){
+        if (lista_paises.size() == 0){
+            Toast.makeText(getApplicationContext(), "Debe de ingresar un Pais" ,Toast.LENGTH_LONG).show();
+        }else  if (nombreCompleto.getText().toString().equals("")){
             Toast.makeText(getApplicationContext(), "Debe de escribir un nombre" ,Toast.LENGTH_LONG).show();
         }else if (telefono.getText().toString().equals("")){
             Toast.makeText(getApplicationContext(), "Debe de escribir un telefono" ,Toast.LENGTH_LONG).show();
@@ -272,5 +274,9 @@ public class MainActivity extends AppCompatActivity {
         {
             lista_paises.add(lista.get(i).getNombrePais()+" ( "+lista.get(i).getCodigo()+" )");
         }
+        /*
+        if (lista.size() == 0){
+            lista_paises.add("Honduras (504)");
+        }*/
     }
 }
