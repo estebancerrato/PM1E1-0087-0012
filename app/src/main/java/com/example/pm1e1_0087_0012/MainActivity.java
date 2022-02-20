@@ -94,7 +94,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //valida que los datos esten ingresados, antes de guardar
-                validarDatos();
+
+
+                try {
+                    validarDatos();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "Debe de tomarse una foto ",Toast.LENGTH_LONG).show();
+                }
 
             }
         });
