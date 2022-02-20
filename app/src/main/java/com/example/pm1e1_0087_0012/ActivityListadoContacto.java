@@ -49,7 +49,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
     static final int PETICION_LLAMADA_TELEFONO = 102;
 
 
-    int previousPosition=-0;
+    int previousPosition = 1;
     int count=1;
     long previousMil=0;
     final Context context = this;
