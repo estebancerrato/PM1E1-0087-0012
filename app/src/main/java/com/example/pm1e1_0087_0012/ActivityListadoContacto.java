@@ -1,21 +1,23 @@
 package com.example.pm1e1_0087_0012;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +29,6 @@ import com.example.pm1e1_0087_0012.configuraciones.SQLiteConexion;
 import com.example.pm1e1_0087_0012.configuraciones.Transacciones;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ActivityListadoContacto extends AppCompatActivity {
 
@@ -38,10 +39,17 @@ public class ActivityListadoContacto extends AppCompatActivity {
     ArrayList <String> ArregloContactos;
     EditText alctxtnombre;
     Button alcbtnAtras,btnactualizarContacto, btnEliminar, btnCompartir;
-
     Intent intent;
     Contactos contacto;
 
+
+    static final int PETICION_LLAMADA_TELEFONO = 102;
+
+
+    int previousPosition=-0;
+    int count=1;
+    long previousMil=0;
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +91,59 @@ public class ActivityListadoContacto extends AppCompatActivity {
 
         //--------------------------------------LISTA------------------------------------------
         //seteo el contacto seleccionado para luego iniciar la actividad en el boton actualizar
+
+
+
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                contacto = listaContactos.get(i);//lleno la lista de contacto
-                setContactoSeleccionado();
+                if(previousPosition==i)
+                {
+                    count++;
+                    if(count==2 && System.currentTimeMillis()-previousMil<=1000)
+                    {
+                        //Toast.makeText(getApplicationContext(), "Doble Click ",Toast.LENGTH_LONG).show();
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                        alertDialogBuilder.setTitle("Acción");
+                        alertDialogBuilder
+                                .setMessage("¿Desea llamar a "+contacto.getNombreContacto()+"?")
+                                .setCancelable(false)
+                                .setPositiveButton("SI",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // si el usuario da click en si procede a llamar el metodo de eliminar
+                                        try{
+                                            permisoLlamada();
+                                        }catch (Exception ex){
+                                            ex.toString();
+                                        }
+
+                                        Toast.makeText(getApplicationContext(),"Realizando llamada",
+                                                Toast.LENGTH_SHORT).show();
+
+                                    }
+                                })
+                                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                        count=1;
+                    }
+                }
+                else
+                {
+                    previousPosition=i;
+                    count=1;
+                    previousMil=System.currentTimeMillis();
+                    //un clic
+                    contacto = listaContactos.get(i);//lleno la lista de contacto
+                    setContactoSeleccionado();
+                }
             }
+
+
         });
 
 
@@ -124,7 +179,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
         });
 
 
-        final Context context = this;
+        //context = this;
 
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +221,22 @@ public class ActivityListadoContacto extends AppCompatActivity {
     }
 
     //-------------------------------------------METODOS-----------------------------------------
+
+    private void permisoLlamada() {
+        // valido si el permiso para acceder a la telefono esta otorgado
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+            // Otorgamos el permiso para acceder al telefono
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CALL_PHONE}, PETICION_LLAMADA_TELEFONO);
+        }else{
+            LlamarContacto();
+        }
+    }
+
+    private void LlamarContacto() {
+        String numero = "+"+contacto.getCodigoPais()+contacto.getNumeroContacto();
+        Intent intent=new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+numero));
+        startActivity(intent);
+    }
 
     private void eliminarContacto() {
         SQLiteConexion conexion = new SQLiteConexion(this, Transacciones.NameDatabase, null, 1);
