@@ -144,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void abrirGaleria() {
-        /*Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/");
-        startActivityForResult(intent.createChooser(intent,"Seleccione la aplicacion"),10);*/
+        startActivityForResult(intent.createChooser(intent,"Seleccione la aplicacion"),10);
 
     }
 
@@ -187,10 +187,12 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             imagen = (Bitmap) extras.get("data");
             foto.setImageBitmap(imagen);
-        }/*else if (resultCode==RESULT_OK){
-
+        }
+        /*
+        if (resultCode == RESULT_OK){
             Uri imageUri = data.getData();
             foto.setImageURI(imageUri);
+
         }*/
 
     }
