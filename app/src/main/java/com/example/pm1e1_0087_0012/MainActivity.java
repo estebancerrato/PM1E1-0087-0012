@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -103,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnSlcFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirGaleria();
+            }
+        });
+
         ObtenerListaPaises();
 
         ArrayAdapter<CharSequence> adp = new ArrayAdapter(this, android.R.layout.simple_spinner_item,lista_paises);
@@ -126,6 +134,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    private void abrirGaleria() {
+        Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/");
+        startActivityForResult(intent.createChooser(intent,"Seleccione la aplicacion"),10);
+
+    }
+
     List<Integer> extraerNumeros(String cadena) {
         List<Integer> todosLosNumeros = new ArrayList<Integer>();
         Matcher encuentrador = Pattern.compile("\\d+").matcher(cadena);
@@ -163,6 +179,11 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             imagen = (Bitmap) extras.get("data");
             foto.setImageBitmap(imagen);
+        }else if (resultCode==RESULT_OK){
+
+            Uri imageUri = data.getData();
+            foto.setImageURI(imageUri);
+
         }
 
     }
