@@ -187,13 +187,11 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             imagen = (Bitmap) extras.get("data");
             foto.setImageBitmap(imagen);
-        }
-        /*
-        if (resultCode == RESULT_OK){
+        }else if (resultCode == RESULT_OK){
             Uri imageUri = data.getData();
             foto.setImageURI(imageUri);
 
-        }*/
+        }
 
     }
 
