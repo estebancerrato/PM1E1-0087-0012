@@ -19,7 +19,7 @@ import com.example.pm1e1_0087_0012.configuraciones.Transacciones;
 import java.io.ByteArrayInputStream;
 
 public class ActivityVerFoto extends AppCompatActivity {
-    SQLiteConexion conexion = new SQLiteConexion(this, Transacciones.NameDatabase,null,1);
+    SQLiteConexion conexion = new SQLiteConexion(this, Transacciones.NameDatabase, null, 1);
     ImageView imageViewFoto;
     Button btnAtras;
 
@@ -35,7 +35,7 @@ public class ActivityVerFoto extends AppCompatActivity {
         btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),ActivityListadoContacto.class);
+                Intent intent = new Intent(getApplicationContext(), ActivityListadoContacto.class);
                 startActivity(intent);
             }
         });
@@ -49,10 +49,10 @@ public class ActivityVerFoto extends AppCompatActivity {
 
     }
 
-    public Bitmap buscarImagen(String id){
+    public Bitmap buscarImagen(String id) {
         SQLiteDatabase db = conexion.getWritableDatabase();
 
-        String sql = "SELECT foto FROM contactos WHERE id ="+id;
+        String sql = "SELECT foto FROM contactos WHERE id =" + id;
         Cursor cursor = db.rawQuery(sql, new String[] {});
         Bitmap bitmap = null;
         if(cursor.moveToFirst()){
@@ -66,4 +66,5 @@ public class ActivityVerFoto extends AppCompatActivity {
         db.close();
         return bitmap;
     }
+
 }

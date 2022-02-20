@@ -12,9 +12,11 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -136,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void abrirGaleria() {
-        Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        /*Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/");
-        startActivityForResult(intent.createChooser(intent,"Seleccione la aplicacion"),10);
+        startActivityForResult(intent.createChooser(intent,"Seleccione la aplicacion"),10);*/
 
     }
 
@@ -179,11 +181,11 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             imagen = (Bitmap) extras.get("data");
             foto.setImageBitmap(imagen);
-        }else if (resultCode==RESULT_OK){
+        }/*else if (resultCode==RESULT_OK){
 
             Uri imageUri = data.getData();
             foto.setImageURI(imageUri);
-        }
+        }*/
 
     }
 
@@ -209,13 +211,12 @@ public class MainActivity extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] ArrayFoto  = stream.toByteArray();
 
-
         ContentValues valores = new ContentValues();
 
         valores.put(Transacciones.nombreCompleto, nombreCompleto.getText().toString());
         valores.put(Transacciones.telefono, telefono.getText().toString());
         valores.put(Transacciones.nota, nota.getText().toString());
-        valores.put(Transacciones.foto, String.valueOf(foto));
+        valores.put(String.valueOf(Transacciones.foto),ArrayFoto);
         valores.put(Transacciones.pais, codigoPaisSeleccionado);
 
 

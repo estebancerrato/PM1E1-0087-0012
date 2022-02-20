@@ -20,7 +20,7 @@
         <ImageView
             android:id="@+id/imgViewVerFoto"
             android:layout_width="match_parent"
-            android:layout_height="374dp"
+            android:layout_height="466dp"
             tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
