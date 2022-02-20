@@ -60,7 +60,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btnCompartir"
                     android:layout_width="66dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"

@@ -11,6 +11,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -25,6 +27,7 @@ import com.example.pm1e1_0087_0012.configuraciones.SQLiteConexion;
 import com.example.pm1e1_0087_0012.configuraciones.Transacciones;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ActivityListadoContacto extends AppCompatActivity {
 
@@ -34,7 +37,7 @@ public class ActivityListadoContacto extends AppCompatActivity {
     ArrayList<Contactos> listaContactos;
     ArrayList <String> ArregloContactos;
     EditText alctxtnombre;
-    Button alcbtnAtras,btnactualizarContacto, btnEliminar;
+    Button alcbtnAtras,btnactualizarContacto, btnEliminar, btnCompartir;
 
     Intent intent;
     Contactos contacto;
@@ -86,14 +89,15 @@ public class ActivityListadoContacto extends AppCompatActivity {
                 contacto = listaContactos.get(i);//lleno la lista de contacto
                 setContactoSeleccionado();
             }
-
         });
+
+
 
 
         alcbtnAtras = (Button) findViewById(R.id.btnAtras);
         btnactualizarContacto = (Button) findViewById(R.id.btnActualizarContacto);
         btnEliminar = (Button) findViewById(R.id.btnaclEliminarContacto);
-
+        btnCompartir = (Button) findViewById(R.id.btnCompartir);
 
     //------------------------------------------BOTONES------------------------------------------
         alcbtnAtras.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +115,14 @@ public class ActivityListadoContacto extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnCompartir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    enviarContacto();
+            }
+        });
+
 
         final Context context = this;
 
@@ -175,7 +187,17 @@ public class ActivityListadoContacto extends AppCompatActivity {
 
     }
 
+    private void enviarContacto(){
+        String contactoEnviado = "El numero de "+contacto.getNombreContacto().toString()+
+                " es +"+contacto.getCodigoPais()+contacto.getNumeroContacto() ;
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, contactoEnviado);
+        sendIntent.setType("text/plain");
 
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
+    }
 
 
     private void setContactoSeleccionado() {
