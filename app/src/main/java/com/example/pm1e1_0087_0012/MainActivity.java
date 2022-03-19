@@ -191,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
             Uri imageUri = data.getData();
             foto.setImageURI(imageUri);
 
+
         }
 
     }
